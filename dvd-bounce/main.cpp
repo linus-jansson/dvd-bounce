@@ -9,6 +9,8 @@
 #include <fstream>
 #include <iostream>
 
+#include <cmath>
+
 int randNum(int min, int max)
 {
 	return rand() % max + min;
@@ -26,8 +28,6 @@ std::tuple<int, int, int> pickColor(int min, int max)
 
 int main()
 {		
-	// try
-	// {
 
 	srand(time(NULL));
 
@@ -36,77 +36,97 @@ int main()
 	SDL_SetWindowMinimumSize(frame.getWindow(), frame.getImgWidth(), frame.getImgHeight());
 
 
-	int xPos = randNum(0, frame.getWindowHeight());
-	int yPos = randNum(0, frame.getWindowWidth());
+	// int xPos = randNum(0, frame.getWindowHeight());
+	// int yPos = randNum(0, frame.getWindowWidth());
 
-	int xSpeed = 2;
-	int ySpeed = 2;
+	double rad = 200;
 
-	int r,g,b = 255;
+	long double xPos, yPos;
 
-	std::tuple<int, int, int> color(r, g, b);	
+	// std::cout << "xpos: " << xPos << " Ypos: " << yPos << "\n";
+
+	int xSpeed = 1.0;
+	int ySpeed = 1.0;
+
+	int red,green,blue = 255;
+
+	std::tuple<int, int, int> color(red, green, blue);	
 
 	color = pickColor(100, 255);
-	// std::cout << "hello\n";
+
+	const double TwoPi = 2.0 * std::acos(1.0);
+	double t = 0.0;
+
 	while (!frame.isClosed())
 	{	
+		// A debug cout to check the xpos and the ypos
+		// std::cout << "xpos: " << xPos << " Ypos: " << yPos << "\n";
+
 		// Check for events
 		frame.windowEvents();
 
 		// Regulate the actual speed of the moving logo
 		std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
-		// Moving the Position of the DVD 
-		xPos = xPos + xSpeed;
-		yPos = yPos + ySpeed;
 
-		if (frame.getWindowWidth() <= xPos + frame.getImgWidth())
+		if (rad > frame.getWindowHeight())
 		{
-			xSpeed = -xSpeed;
-			xPos = frame.getWindowWidth() - frame.getImgWidth();
-
-			color = pickColor(100, 255);
-			
-
+			rad =  frame.getWindowHeight() / 2;
 		}
-		else if (xPos <= 0)
+		else
 		{
-			xPos = 0;
-			xSpeed = -xSpeed;
-			color = pickColor(100, 255);
+			rad = 200;
 		}
+		
 
-		if (yPos + frame.getImgHeight() >= frame.getWindowHeight())
-		{
-			ySpeed = -ySpeed;
-			yPos = frame.getWindowHeight() - frame.getImgHeight();
 
-			color = pickColor(100, 255);
+		// Moving the Position of the DVD  in a circle
+		xPos = (frame.getWindowWidth() / 2.0) + rad * std::cos(t);
+		yPos = (frame.getWindowHeight() / 2.0) + rad * std::sin(t);
 
-		}
-		else if (yPos <= 0)
-		{
-			yPos = 0;
-			ySpeed = -ySpeed;
-			color = pickColor(100, 255);
+		t += 0.01;
+		if( t > TwoPi ) t -= TwoPi;
 
-		}
+		// std::cout << "xpos: " << xPos << " Ypos: " << yPos << "\n";
+
+		// int xPos = (frame.getWindowWidth() - frame.getImgWidth() ) / 2;
+		// int yPos = frame.getWindowHeight() / 2;
+
+		// if (frame.getWindowWidth() <= xPos + frame.getImgWidth())
+		// {
+		// 	xSpeed = -xSpeed;
+		// 	xPos = frame.getWindowWidth() - frame.getImgWidth();
+
+		// 	color = pickColor(100, 255);
+		// }
+		// else if (xPos <= 0)
+		// {
+		// 	xPos = 0;
+		// 	xSpeed = -xSpeed;
+		// 	color = pickColor(100, 255);
+		// }
+
+		// if (yPos + frame.getImgHeight() >= frame.getWindowHeight())
+		// {
+		// 	ySpeed = -ySpeed;
+		// 	yPos = frame.getWindowHeight() - frame.getImgHeight();
+
+		// 	color = pickColor(100, 255);
+
+		// }
+		// else if (yPos <= 0)
+		// {
+		// 	yPos = 0;
+		// 	ySpeed = -ySpeed;
+		// 	color = pickColor(100, 255);
+
+		// }
 
 		// Set the background color to black
-		frame.setWindowBGcolor(0, 0, 0, 255);	
+		frame.setWindowBGcolor(255, 255, 255, 255);	
 		// Update logo (pos, size, color)
 		DVD.setProperties(xPos, yPos, frame.getImgWidth(), frame.getImgHeight(), color);
-
-		// color = pickColor(100, 255);
-		// xPos = randNum(0, frame.getWindowHeight());
-		// yPos = randNum(0, frame.getWindowWidth());
 	}
 
-	// }
-	// catch (const std::exception & e)
-	// {
-	// 	std::ofstream f("exceptions.txt", std::ios::app);
-	// 	f << e.what() << '\n';
-	// 	return 1;
-	// }
+
 }
