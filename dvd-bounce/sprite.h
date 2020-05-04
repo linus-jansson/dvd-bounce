@@ -30,7 +30,7 @@
 
             void setProperties(int xPos, int yPos, int height, int width, std::tuple<int, int, int> color)
             {
-                SDL_Rect rect = { xPos, yPos, height, width };
+                SDL_Rect rect = { xPos /*- (width/2)*/, yPos /*- (height/2)*/, height, width };
 
                 auto r = std::get<0>(color);
                 auto g = std::get<1>(color);

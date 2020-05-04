@@ -31,6 +31,7 @@ namespace limpan
 			SDL_GetDesktopDisplayMode(0, &DM);	
 
 			Uint32 FLAGS = SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED;  
+
 			
 			_height = DM.h;
 			// std::cout << _height << "\n";
