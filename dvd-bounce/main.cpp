@@ -39,14 +39,12 @@ int main()
 	int xPos = randNum(0, frame.getWindowHeight());
 	int yPos = randNum(0, frame.getWindowWidth());
 
-	double rad = 200;
-
-	// long double xPos, yPos;
+	// double rad = 200;
 
 	// std::cout << "xpos: " << xPos << " Ypos: " << yPos << "\n";
 
-	int xSpeed = 200.0;
-	int ySpeed = 200.0;
+	int xSpeed = 2.0;
+	int ySpeed = 2.0;
 
 	int red,green,blue = 255;
 
@@ -54,45 +52,45 @@ int main()
 
 	color = pickColor(100, 255);
 
-	const double TwoPi = 2.0 * std::acos(1.0);
-	double t = 0.0;
+	// const double TwoPi = 2.0 * std::acos(1.0);
+	// double t = 0.0;
 
 	while (!frame.isClosed())
 	{	
-		// A debug cout to check the xpos and the ypos
-		// std::cout << "xpos: " << xPos << " Ypos: " << yPos << "\n";
+		// // A debug cout to check the xpos and the ypos
+		// // std::cout << "xpos: " << xPos << " Ypos: " << yPos << "\n";
 
 		// Check for events
 		frame.windowEvents();
 
 		// Regulate the actual speed of the moving logo
-		// std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
 
-		// if (rad > frame.getWindowHeight())
-		// {
-		// 	rad =  frame.getWindowHeight() / 2;
-		// }
-		// else
-		// {
-		// 	rad = 200;
-		// }
+
+		// /* A bit buggy part that makes the logo go in a circle*/
+		// // if (rad > frame.getWindowHeight())
+		// // {
+		// // 	rad =  frame.getWindowHeight() / 2;
+		// // }
+		// // else
+		// // {
+		// // 	rad = 200;
+		// // }
 		
+		// // // Moving the Position of the DVD  in a circle
+		// // xPos = (frame.getWindowWidth() / 2.0) + rad * std::cos(t);
+		// // yPos = (frame.getWindowHeight() / 2.0) + rad * std::sin(t);
 
+		// // t += 0.01;
+		// // if( t > TwoPi ) t -= TwoPi;
 
-		// // Moving the Position of the DVD  in a circle
-		// xPos = (frame.getWindowWidth() / 2.0) + rad * std::cos(t);
-		// yPos = (frame.getWindowHeight() / 2.0) + rad * std::sin(t);
-
-		// t += 0.01;
-		// if( t > TwoPi ) t -= TwoPi;
+		// // int xPos = (frame.getWindowWidth() - frame.getImgWidth() ) / 2;
+		// // int yPos = frame.getWindowHeight() / 2;
 
 		xPos += xSpeed;
 		yPos += ySpeed;
 
-
-		// int xPos = (frame.getWindowWidth() - frame.getImgWidth() ) / 2;
-		// int yPos = frame.getWindowHeight() / 2;
 
 		if (frame.getWindowWidth() <= xPos + frame.getImgWidth())
 		{
@@ -123,11 +121,14 @@ int main()
 			color = pickColor(100, 255);
 
 		}
-
+		// long double xPos = frame.getWindowWidth()/2;
+		// long double yPos = frame.getWindowHeight()/2;
+		
 		// Set the background color to black
-		frame.setWindowBGcolor(255, 255, 255, 255);	
+		frame.setWindowBGcolor(0, 0, 0, 255);	
 		// Update logo (pos, size, color)
 		DVD.setProperties(xPos, yPos, frame.getImgWidth(), frame.getImgHeight(), color);
+
 	}
 
 
