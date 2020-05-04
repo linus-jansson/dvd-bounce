@@ -36,17 +36,17 @@ int main()
 	SDL_SetWindowMinimumSize(frame.getWindow(), frame.getImgWidth(), frame.getImgHeight());
 
 
-	// int xPos = randNum(0, frame.getWindowHeight());
-	// int yPos = randNum(0, frame.getWindowWidth());
+	int xPos = randNum(0, frame.getWindowHeight());
+	int yPos = randNum(0, frame.getWindowWidth());
 
 	double rad = 200;
 
-	long double xPos, yPos;
+	// long double xPos, yPos;
 
 	// std::cout << "xpos: " << xPos << " Ypos: " << yPos << "\n";
 
-	int xSpeed = 1.0;
-	int ySpeed = 1.0;
+	int xSpeed = 200.0;
+	int ySpeed = 200.0;
 
 	int red,green,blue = 255;
 
@@ -66,61 +66,63 @@ int main()
 		frame.windowEvents();
 
 		// Regulate the actual speed of the moving logo
-		std::this_thread::sleep_for(std::chrono::milliseconds(5));
+		// std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
 
-		if (rad > frame.getWindowHeight())
-		{
-			rad =  frame.getWindowHeight() / 2;
-		}
-		else
-		{
-			rad = 200;
-		}
+		// if (rad > frame.getWindowHeight())
+		// {
+		// 	rad =  frame.getWindowHeight() / 2;
+		// }
+		// else
+		// {
+		// 	rad = 200;
+		// }
 		
 
 
-		// Moving the Position of the DVD  in a circle
-		xPos = (frame.getWindowWidth() / 2.0) + rad * std::cos(t);
-		yPos = (frame.getWindowHeight() / 2.0) + rad * std::sin(t);
+		// // Moving the Position of the DVD  in a circle
+		// xPos = (frame.getWindowWidth() / 2.0) + rad * std::cos(t);
+		// yPos = (frame.getWindowHeight() / 2.0) + rad * std::sin(t);
 
-		t += 0.01;
-		if( t > TwoPi ) t -= TwoPi;
+		// t += 0.01;
+		// if( t > TwoPi ) t -= TwoPi;
 
-		// std::cout << "xpos: " << xPos << " Ypos: " << yPos << "\n";
+		xPos += xSpeed;
+		yPos += ySpeed;
+
 
 		// int xPos = (frame.getWindowWidth() - frame.getImgWidth() ) / 2;
 		// int yPos = frame.getWindowHeight() / 2;
 
-		// if (frame.getWindowWidth() <= xPos + frame.getImgWidth())
-		// {
-		// 	xSpeed = -xSpeed;
-		// 	xPos = frame.getWindowWidth() - frame.getImgWidth();
+		if (frame.getWindowWidth() <= xPos + frame.getImgWidth())
+		{
+			xSpeed = -xSpeed;
+			xPos = frame.getWindowWidth() - frame.getImgWidth();
 
-		// 	color = pickColor(100, 255);
-		// }
-		// else if (xPos <= 0)
-		// {
-		// 	xPos = 0;
-		// 	xSpeed = -xSpeed;
-		// 	color = pickColor(100, 255);
-		// }
+			color = pickColor(100, 255);
+		}
+		else if (xPos <= 0)
+		{
+			xPos = 0;
+			xSpeed = -xSpeed;
+			color = pickColor(100, 255);
+		}
 
-		// if (yPos + frame.getImgHeight() >= frame.getWindowHeight())
-		// {
-		// 	ySpeed = -ySpeed;
-		// 	yPos = frame.getWindowHeight() - frame.getImgHeight();
+		if (yPos + frame.getImgHeight() >= frame.getWindowHeight())
+		{
+			ySpeed = -ySpeed;
+			yPos = frame.getWindowHeight() - frame.getImgHeight();
 
-		// 	color = pickColor(100, 255);
+			color = pickColor(100, 255);
 
-		// }
-		// else if (yPos <= 0)
-		// {
-		// 	yPos = 0;
-		// 	ySpeed = -ySpeed;
-		// 	color = pickColor(100, 255);
+		}
+		else if (yPos <= 0)
+		{
+			yPos = 0;
+			ySpeed = -ySpeed;
+			color = pickColor(100, 255);
 
-		// }
+		}
 
 		// Set the background color to black
 		frame.setWindowBGcolor(255, 255, 255, 255);	
